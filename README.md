@@ -1,5 +1,5 @@
-Ansible playbook to install anconda
-====================================
+Ansible playbook to install software packages
+==============================================
 
 
 This project contains the simplest possible [ansible](http://docs.ansible.com/ansible) playbook to download and install anaconda.
@@ -13,7 +13,7 @@ This project contains the simplest possible [ansible](http://docs.ansible.com/an
  - Run the playbook :
 
       ```
-      cd ansible-anaconda
+      cd ansible
       ansible-playbook -i envs/ playbook.yml --user=$USER --ask-sudo-pass
       ```
       
