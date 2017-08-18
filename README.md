@@ -6,7 +6,7 @@ This project contains the simplest possible [ansible](http://docs.ansible.com/an
 
 ### How to use
 
- - Install ansible on your computer (sudo pip install ansible...), by default it installs in `/home/$USER/.local`, if not then add its installed directory to `$PATH` 
+ - Install ansible on your computer `pip install ansible`, by default it installs in `/home/$USER/.local`, if not then add its installed directory to `$PATH` 
  - Clone this project.
  - Edit the `envs/hosts` file and enter the FQDN or IP address of the server you are deploying to.
  - Edit the `roles/anaconda/defaults/main.yml` file and change the version of anaconda.
