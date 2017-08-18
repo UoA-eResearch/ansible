@@ -6,16 +6,15 @@ This project contains the simplest possible [ansible](http://docs.ansible.com/an
 
 ### How to use
 
- - Install ansible on your computer (sudo pip install ansible...).
- - Set $ANSIBLE_HOME.
+ - Install ansible on your computer (sudo pip install ansible...), by default it installs in `/home/$USER/.local`, if not then add its installed directory to `$PATH` 
  - Clone this project.
- - Edit the `envs/hosts` file and enter the IP address of the server you are deploying to.
+ - Edit the `envs/hosts` file and enter the FQDN or IP address of the server you are deploying to.
  - Edit the `roles/anaconda/defaults/main.yml` file and change the version of anaconda.
  - Run the playbook :
 
       ```
-      source $ANSIBLE_HOME/hacking/env-setup
       cd ansible-anaconda
-      $ANSIBLE_HOME/bin/ansible-playbook -i envs/ playbook.yml --user=$USER --ask-sudo-pass
+      ansible-playbook -i envs/ playbook.yml --user=$USER --ask-sudo-pass
       ```
       
+### Note: all the servers in `envs/hosts` should allow ssh auth using keypair
