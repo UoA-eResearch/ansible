@@ -1,0 +1,9 @@
+---
+# defaults file for anaconda
+anaconda_mirror : 'https://repo.continuum.io/archive'
+anaconda_python_ver : '3'
+anaconda_ver : '4.4.0'
+anaconda_platform : 'Linux-x86_64'
+
+anaconda_make_sys_default : True
+anaconda_cleanup : False

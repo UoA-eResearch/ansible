@@ -1,0 +1,41 @@
+---
+- name: download installer.sh
+  sudo : yes
+  environment: "{{proxy_env}}"
+  get_url: >
+    url={{anaconda_installer_url}}
+    dest=/tmp/{{anaconda_installer_sh}}
+    owner=root
+    group=root
+    mode=751
+    use_proxy=yes
+
+- name: install anconda
+  sudo: yes
+  command: /tmp/{{anaconda_installer_sh}} -b -p /data/{{anaconda_name}}
+  args:
+    creates: /data/{{anaconda_name}}/bin/conda
+
+- name: remove installer.sh
+  sudo : yes
+  file:
+    path=/tmp/{{anaconda_installer_sh}}
+    state=absent
+
+- name: link anaconda
+  sudo: yes
+  file:
+    dest=/data/anaconda
+    src=/data/{{anaconda_name}}
+    state=link
+    owner=root
+    group=root
+
+- name: link anaconda under opt
+  sudo: yes
+  file:
+    dest=/opt/anaconda
+    src=/data/{{anaconda_name}}
+    state=link
+    owner=root
+    group=root

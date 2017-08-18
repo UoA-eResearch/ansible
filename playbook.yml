@@ -1,0 +1,4 @@
+- name: "Playbook Anaconda"
+  hosts: all
+  roles:   
+      - {role: anaconda}
