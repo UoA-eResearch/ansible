@@ -1,41 +1,39 @@
 ---
 - name: download installer.sh
-  sudo : yes
   environment: "{{proxy_env}}"
   get_url: >
     url={{anaconda_installer_url}}
     dest=/tmp/{{anaconda_installer_sh}}
-    owner=root
-    group=root
     mode=751
-    use_proxy=yes
 
-- name: install anconda
-  sudo: yes
-  command: /tmp/{{anaconda_installer_sh}} -b -p /data/{{anaconda_name}}
+- name: install anconda in {{anaconda_install_dir}}/{{anaconda_name}}
+  command: /tmp/{{anaconda_installer_sh}} -b -p {{anaconda_install_dir}}/{{anaconda_name}}
   args:
-    creates: /data/{{anaconda_name}}/bin/conda
+    creates: "{{anaconda_install_dir}}/{{anaconda_name}}/bin/conda"
 
 - name: remove installer.sh
-  sudo : yes
   file:
     path=/tmp/{{anaconda_installer_sh}}
     state=absent
 
-- name: link anaconda
-  sudo: yes
+- name: link {{anaconda_link_dir}} -> {{anaconda_install_dir}}/{{anaconda_name}}
+  become: yes
   file:
-    dest=/data/anaconda
-    src=/data/{{anaconda_name}}
+    dest={{anaconda_link_dir}}
+    src={{anaconda_install_dir}}/{{anaconda_name}}
     state=link
     owner=root
     group=root
 
-- name: link anaconda under opt
-  sudo: yes
-  file:
-    dest=/opt/anaconda
-    src=/data/{{anaconda_name}}
-    state=link
-    owner=root
-    group=root
+- name: include {{anaconda_bin_dir}} in PATH
+  become: yes
+  lineinfile:
+    dest: /etc/profile
+    state: present
+    insertafter: 'EOF'
+    line: "export PATH={{anaconda_bin_dir}}:$PATH"
+
+- name: create py2.7 environment in anaconda
+  shell: "{{ anaconda_bin_dir }}/conda create -n py27 python=2.7 anaconda"
+  args:
+    creates: "{{anaconda_install_dir}}/{{anaconda_name}}/envs/py27/bin/python"
