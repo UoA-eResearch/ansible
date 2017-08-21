@@ -1,0 +1,32 @@
+# tasks file for rstudio
+---
+- name: install | additional
+  apt:
+    name: "{{ item }}"
+    state: "{{ apt_install_state | default('latest') }}"
+  with_items: "{{ rstudio_install }}"
+  tags:
+    - rstudio-install-additional
+  become: yes
+
+- name: install | download deb
+  get_url: >
+    url=https://download1.rstudio.org/rstudio-{{ rstudio_version }}-{{ rstudio_machine_map[ansible_machine] }}.deb
+    dest={{ rstudio_downloads_path }}/rstudio-{{ rstudio_version }}-{{ rstudio_machine_map[ansible_machine] }}.deb
+    mode=751
+  tags:
+    - rstudio-install-download
+    - rstudio-install-download-deb
+
+- name: install | install deb
+  apt:
+    deb: "{{ rstudio_downloads_path }}/rstudio-{{ rstudio_version }}-{{ rstudio_machine_map[ansible_machine] }}.deb"
+  tags:
+    - rstudio-install-install
+    - rstudio-install-install-deb
+  become: yes
+
+- name: install | delete deb
+  file:
+    path={{ rstudio_downloads_path }}/rstudio-{{ rstudio_version }}-{{ rstudio_machine_map[ansible_machine] }}.deb
+    state=absent

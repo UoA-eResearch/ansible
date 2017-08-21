@@ -1,6 +1,5 @@
 ---
 - name: download installer.sh
-  environment: "{{proxy_env}}"
   get_url: >
     url={{anaconda_installer_url}}
     dest=/tmp/{{anaconda_installer_sh}}

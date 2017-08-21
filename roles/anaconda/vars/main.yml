@@ -4,6 +4,3 @@ anaconda_name : 'Anaconda{{anaconda_python_ver}}-{{anaconda_ver}}-{{anaconda_pla
 anaconda_installer_sh : '{{anaconda_name}}.sh'
 anaconda_installer_url : '{{anaconda_mirror}}/{{anaconda_installer_sh}}'
 
-proxy_env:
-  http_proxy: http://squid.auckland.ac.nz:3128
-  https_proxy: http://squid.auckland.ac.nz:3128

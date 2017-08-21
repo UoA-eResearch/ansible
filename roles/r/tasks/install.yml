@@ -1,0 +1,22 @@
+# tasks file for r
+---
+- name: install | dependencies
+  apt:
+    name: "{{ item }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  with_items: "{{ r_dependencies }}"
+  when: "item | trim != ''"
+  tags:
+    - r-install-dependencies
+  become: yes
+
+- name: install | additional
+  apt:
+    name: "{{ item }}"
+    state: "{{ apt_install_state | default('latest') }}"
+  with_items: "{{ r_install }}"
+  tags:
+    - r-install-additional
+  become: yes

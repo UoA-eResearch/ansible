@@ -1,4 +1,11 @@
-- name: "Playbook Anaconda"
+- name: "Installing Software Packages on VM"
   hosts: all
-  roles:   
-      - {role: anaconda}
+  roles:
+    - {role: anaconda}
+    - {role: r}
+    - {role: rstudio}
+   
+  environment: 
+    http_proxy: http://squid.auckland.ac.nz:3128
+    https_proxy: http://squid.auckland.ac.nz:3128
+
