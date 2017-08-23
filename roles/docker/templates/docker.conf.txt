@@ -1,0 +1,2 @@
+[Service]
+Environment="HTTP_PROXY=http://squid.auckland.ac.nz:3128/" "HTTP_PROXYS=http://squid.auckland.ac.nz:3128/"

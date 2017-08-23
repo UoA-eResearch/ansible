@@ -1,0 +1,47 @@
+---
+
+- include: "os/{{ ansible_os_family }}.yml"
+
+- include: "install.yml"
+
+- name: ensure directory exist
+  file:
+    path: /etc/systemd/system/docker.service.d/
+    recurse: yes
+    state: directory
+  become: yes
+  tags:
+    - configuration
+
+- name: configurate docker proxy
+  template:
+    src: docker.conf.txt
+    dest: /etc/systemd/system/docker.service.d/proxy.conf
+  become: yes
+  tags:
+    - configuration
+
+- name: ensure config file is present
+  file:
+    path: /etc/default/docker
+    state: file
+  become: yes
+  tags:
+    - configuration
+
+- name: add proxy to config file
+  lineinfile:
+    path: /etc/default/docker
+    line: 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
+  become: yes
+  notify:
+    - reload unit
+    - restart docker
+  tags:
+    - configuration
+
+- name: ensure starts on system boot
+  service:
+    name: docker
+    enabled: yes
+
