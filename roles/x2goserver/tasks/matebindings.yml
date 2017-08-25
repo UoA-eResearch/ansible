@@ -1,0 +1,51 @@
+---
+- name: matebindings | add ubuntu-mate-dev
+  apt_repository:
+    repo: "ppa:ubuntu-mate-dev/ppa"
+    state: present
+    update_cache: true
+  tags:
+    - x2go-matebindings-repository-add
+  become: yes
+
+
+- name: matebindings | add ubuntu-mate-dev/{{ ansible_distribution_release }}-mate
+  apt_repository:
+    repo: "ppa:ubuntu-mate-dev/{{  ansible_distribution_release }}-mate"
+    state: present
+    update_cache: true
+  tags:
+    - x2go-matebindings-repository-add
+  become: yes
+
+- name: matebindings | install ubuntu-mate-core
+  apt:
+    name: "ubuntu-mate-core"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - x2go-matebindings-install-dependencies
+  become: yes
+
+- name: matebindings | install ubuntu-mate-desktop
+  apt:
+    name: "ubuntu-mate-desktop"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - x2go-matebindings-install-dependencies
+  become: yes
+
+- name: matebindings | install x2gomatebindings
+  apt:
+    name: "x2gomatebindings"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - x2go-matebindings-install-dependencies
+  become: yes
+
+

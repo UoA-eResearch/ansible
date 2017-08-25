@@ -1,0 +1,18 @@
+# tasks file for x2goserver
+---
+- include: repository.yml 
+  tags:
+    - configuration
+    - x2go
+    - x2go-repository                                                                                                                 
+- include: install.yml
+  tags:
+    - configuration
+    - x2go
+    - x2go-install
+
+- include: matebindings.yml
+  tags:
+    - configuration
+    - x2go
+    - x2go-matebindings

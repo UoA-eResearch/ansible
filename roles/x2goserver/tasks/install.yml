@@ -1,0 +1,20 @@
+---
+- name: install | x2goserver
+  apt:
+    name: "x2goserver"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - x2go-install-dependencies
+  become: yes
+
+- name: install | x2goserver-xsession
+  apt:
+    name: "x2goserver-xsession"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - x2go-install-dependencies
+  become: yes

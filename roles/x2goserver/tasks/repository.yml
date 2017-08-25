@@ -1,0 +1,10 @@
+---
+- name: repository | add x2go/stable
+  apt_repository:
+    repo: "ppa:x2go/stable"
+    state: present
+    update_cache: true
+  tags:
+    - x2go-repository-add
+  become: yes
+
