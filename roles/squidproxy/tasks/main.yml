@@ -1,0 +1,20 @@
+---
+
+
+- name: ensure config file is present
+  file:
+    path: /etc/profile
+    state: file
+  become: yes
+
+- name: add http proxy to config file
+  lineinfile:
+    path: /etc/profile
+    line: 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
+  become: yes
+
+- name: add https proxy to config file
+  lineinfile:
+    path: /etc/profile
+    line: 'export https_proxy="http://squid.auckland.ac.nz:3128/"'
+  become: yes
