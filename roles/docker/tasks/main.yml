@@ -32,7 +32,10 @@
 - name: add proxy to config file
   lineinfile:
     path: /etc/default/docker
-    line: 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
+    line: "{{ item }}"
+  with_items:
+    - 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
+    - 'export https_proxy="http://squid.auckland.ac.nz:3128/"'
   become: yes
   notify:
     - reload unit
