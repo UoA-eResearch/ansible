@@ -3,10 +3,18 @@
 #   debug:
 #     var: hostvars[inventory_hostname]
 
+- name: manage_lvm | partition the disk to LVM
+  parted:
+    device: "{{ lvm_disk }}"
+    number: 1
+    flags: [ lvm ]
+    state: "present"
+  become: true
+
 - name: manage_lvm | creating new LVM volume group
   lvg:
     vg: "{{ lvm_vgname }}"
-    pvs: "{{ lvm_disk }}"
+    pvs: "{{ lvm_disk }}1"
     state: "present"
   become: true
 

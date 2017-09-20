@@ -1,10 +1,20 @@
 ---
-# defaults file for ansible-manage-lvm
+# defaults configuration
 
+# name of the volume group
 lvm_vgname: datavg
+
+# Specify the disk here, will be automatically partitioned.
 lvm_disk: /dev/sdb
+
+# name of the logical volume
 lvm_lvname: datalv
+
 # Define size of lvol: 100%FREE, 10g, 1024 (megabytes by default)
 lvm_size: 100%FREE
+
+# mount point
 lvm_mntp: /data
+
+# file system type. For new VMs, xfs is the only option...
 lvm_filesystem: xfs
