@@ -1,0 +1,22 @@
+---
+- name: ubuntu | installing pre-reqs
+  apt:
+    name: "{{ item }}"
+    state: "present"
+  become: true
+  with_items:
+     - 'lvm2'
+     - 'scsitools'
+     - 'xfsprogs'
+
+- name: ubuntu | checking for scsi devices
+  shell: "sg_scan"
+  become: true
+  register: "scsi_devices"
+  changed_when: False
+
+- name: ubuntu | rescanning for new disks added
+  command: "/sbin/rescan-scsi-bus"
+  become: true
+  changed_when: False
+  when: scsi_devices['stdout'] != ""

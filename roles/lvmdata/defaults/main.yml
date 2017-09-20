@@ -1,0 +1,10 @@
+---
+# defaults file for ansible-manage-lvm
+
+lvm_vgname: datavg
+lvm_disk: /dev/sdb
+lvm_lvname: datalv
+# Define size of lvol: 100%FREE, 10g, 1024 (megabytes by default)
+lvm_size: 100%FREE
+lvm_mntp: /data
+lvm_filesystem: xfs

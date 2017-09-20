@@ -1,0 +1,47 @@
+---
+# - name: Display all variables/facts known for a host
+#   debug:
+#     var: hostvars[inventory_hostname]
+
+- name: manage_lvm | creating new LVM volume group
+  lvg:
+    vg: "{{ lvm_vgname }}"
+    pvs: "{{ lvm_disk }}"
+    state: "present"
+  become: true
+
+- name: manage_lvm | creating new LVM logical volume
+  lvol:
+    vg: "{{ lvm_vgname }}"
+    lv: "{{ lvm_lvname }}"
+    size: "{{ lvm_size }}"
+    shrink: no
+    state: "present"
+  become: true
+
+- name: manage_lvm | creating new filesystem on new LVM logical volume
+  filesystem:
+    fstype: "{{ lvm_filesystem }}"
+    dev: "/dev/{{ lvm_vgname }}/{{ lvm_lvname }}"
+  become: true
+
+- name: manage_lvm | mounting new filesystem
+  mount:
+    name: "{{ lvm_mntp }}"
+    src: "/dev/{{ lvm_vgname }}/{{ lvm_lvname }}"
+    fstype: "{{ lvm_filesystem }}"
+    state: "mounted"
+  become: true
+
+# We don't need to resize the FS if it's newly mounted.
+
+# - name: manage_lvm | resizing xfs
+#   shell: xfs_growfs {{ lvm_mntp }}
+#   become: true
+#   when: lvm_filesystem == "xfs"
+
+# - name: manage_lvm | resizing ext4
+#   shell: resize2fs /dev/{{ lvm_vgname }}/{{ lvm_lvname }}
+#   become: true
+#   when: lvm_filesystem == "ext4"
+  
