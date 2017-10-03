@@ -25,7 +25,7 @@
     append: yes
   with_items: "{{ vmadmin }}"
 
-- name: add normal users to vmauser and rw group
+- name: add normal users to vmuser and rw group
   become: true
   user:
     name: "{{ item }}"
