@@ -1,0 +1,36 @@
+---
+
+# Ansible doesn't use $PATH
+# The puppet path is fixed for both RHEL and Ubuntu
+- name: disable puppet
+  become: true
+  command: /opt/puppetlabs/bin/puppet agent --disable
+  
+- name: create groups
+  become: true
+  group:
+    name: "{{ project_prefix }}_{{ item }}"
+    state: present
+  with_items:
+    - vmadmin
+    - vmuser
+    - rw
+
+# token group is for 2FA
+- name: add admins to vmadmin, rw and token group
+  become: true
+  user:
+    name: "{{ item }}"
+    groups: "{{ project_prefix }}_vmadmin, {{ project_prefix }}_rw, token"
+    append: yes
+  with_items: "{{ vmadmin }}"
+
+- name: add normal users to vmauser and rw group
+  become: true
+  user:
+    name: "{{ item }}"
+    groups: "{{ project_prefix }}_vmuser, {{ project_prefix }}_rw"
+    append: yes
+  with_items: "{{ vmuser }}"
+
+
