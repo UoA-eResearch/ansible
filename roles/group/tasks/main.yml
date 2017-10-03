@@ -17,7 +17,7 @@
     - rw
 
 # token group is for 2FA
-- name: add admins to vmadmin, rw and token group
+- name: create admin users and add them to vmadmin, rw and token group
   become: true
   user:
     name: "{{ item }}"
@@ -25,7 +25,7 @@
     append: yes
   with_items: "{{ vmadmin }}"
 
-- name: add normal users to vmuser and rw group
+- name: create normal users and add them to vmuser and rw group
   become: true
   user:
     name: "{{ item }}"
