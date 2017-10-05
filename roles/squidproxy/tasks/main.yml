@@ -7,14 +7,18 @@
     state: file
   become: yes
 
-- name: add http proxy to config file
+- name: add http and https proxy to config file
+  become: yes
   lineinfile:
     path: /etc/profile
-    line: 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
-  become: yes
+    line: "{{ item }}"
+  with_items:
+    - 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
+    - 'export https_proxy="http://squid.auckland.ac.nz:3128/"'
 
-- name: add https proxy to config file
-  lineinfile:
-    path: /etc/profile
-    line: 'export https_proxy="http://squid.auckland.ac.nz:3128/"'
+- name: Ubuntu | add proxy setting for apt
+  template:
+    src: apt.conf.txt
+    dest: /etc/apt/apt.conf.d/98proxy
   become: yes
+  when: ansible_os_family == "Debian"
