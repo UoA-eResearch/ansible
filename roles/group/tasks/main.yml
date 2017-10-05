@@ -33,4 +33,11 @@
     append: yes
   with_items: "{{ vmuser }}"
 
+- name: allow vmadmin group to have sudo access
+  become: true
+  lineinfile:
+    path: /etc/sudoers.d/20_{{ project_prefix }}_vmadmin
+    state: present
+    create: yes
+    line: "%{{ project_prefix }}_vmadmin ALL = (ALL) ALL"
 
