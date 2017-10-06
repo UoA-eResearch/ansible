@@ -21,6 +21,7 @@
   become: true
   user:
     name: "{{ item }}"
+    shell: "/bin/bash"
     groups: "{{ project_prefix }}_vmadmin, {{ project_prefix }}_rw, token"
     append: yes
   with_items: "{{ vmadmin }}"
@@ -29,6 +30,7 @@
   become: true
   user:
     name: "{{ item }}"
+    shell: "/bin/bash"
     groups: "{{ project_prefix }}_vmuser, {{ project_prefix }}_rw"
     append: yes
   with_items: "{{ vmuser }}"
