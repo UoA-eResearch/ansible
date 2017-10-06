@@ -43,3 +43,8 @@
     create: yes
     line: "%{{ project_prefix }}_vmadmin ALL = (ALL) ALL"
 
+- name: overwrite PAM sshd configuration to allow vmuser bypass TFA
+  template:
+    src: "sshd.{{ ansible_os_family }}.txt"
+    dest: /etc/pam.d/sshd
+  become: yes

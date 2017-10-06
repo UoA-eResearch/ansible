@@ -1,0 +1,35 @@
+#%PAM-1.0
+### Managed by puppet
+#
+# SSHD access
+account  required   pam_nologin.so
+account  required   pam_tally2.so
+account  required   pam_access.so
+# Only enforce password expiry if we have UID < 1000
+account  [success=1 default=ignore] pam_succeed_if.so uid >= 1000 quiet
+account  required   pam_unix.so
+account  sufficient pam_localuser.so
+account  include    password-auth
+# Lock non-root accounts for @unlocktime after @loginfails failed login attempts
+auth     required   pam_tally2.so onerr=succeed audit serialize deny=8 unlock_time=2400
+auth     required   pam_env.so
+auth     required   pam_sepermit.so
+# Use kerberos for UID>=1000, local for everyone else
+auth     [success=6 default=ignore] pam_succeed_if.so uid < 1000 quiet
+auth     [success=3 default=ignore] pam_succeed_if.so user ingroup token quiet
+auth     sufficient pam_krb5.so try_first_pass realm=UOA.AUCKLAND.AC.NZ
+auth     sufficient pam_radius_auth.so use_first_pass
+auth     requisite  pam_deny.so
+auth     sufficient pam_radius_auth.so
+auth     requisite  pam_deny.so
+auth     sufficient pam_unix.so try_first_pass
+auth     required   pam_deny.so
+auth     include    password-auth
+session  optional   pam_krb5.so
+# pam_selinux.so close should be the first session rule
+session  required   pam_selinux.so close
+session  required   pam_loginuid.so
+# pam_selinux.so open should only be followed by sessions to be executed in the user context
+session  required   pam_selinux.so open env_params
+session  optional   pam_keyinit.so force revoke
+password include    password-auth
