@@ -1,9 +1,11 @@
 - name: "Installing Software Packages on VM"
   hosts: all
   roles:
-    - {role: anaconda}
-    - {role: r}
-    - {role: rstudio}
+    - anaconda  
+    - r 
+    - rstudio
+    - squidproxy
+    - x2goserver
    
   environment: 
     http_proxy: http://squid.auckland.ac.nz:3128

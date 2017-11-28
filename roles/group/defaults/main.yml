@@ -1,6 +1,6 @@
 ---
 # defaults configuration
 
-project_prefix: rvmf00123
-vmadmin: ['adm123', 'adm456']
-vmuser: ['usr123', 'usr456']
+project_prefix: rvmf00165
+vmadmin: ['zhe203','smat924','mkuk073','nyou045','pgup009','jdip004','cmcl075','mfel395','smas036','ywha001','rbur004']
+vmuser: []
