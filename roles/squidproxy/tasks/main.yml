@@ -15,6 +15,7 @@
   with_items:
     - 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
     - 'export https_proxy="http://squid.auckland.ac.nz:3128/"'
+    - 'export no_proxy="localhost,127.0.0.1,localaddress,.auckland.ac.nz"'
 
 - name: Ubuntu | add proxy setting for apt
   template:
