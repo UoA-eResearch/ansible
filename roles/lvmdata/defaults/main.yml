@@ -18,3 +18,6 @@ lvm_mntp: /data
 
 # file system type. For new VMs, xfs is the only option...
 lvm_filesystem: xfs
+
+# project code, will append _rw automatically
+project_code: rvmf00157
