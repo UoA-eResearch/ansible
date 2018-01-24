@@ -1,23 +1,16 @@
 ---
 # tasks file for groups.local
 
-- name: add groups in /etc/groups.local
+- name: create file /etc/groups.local
   become: true
-  blockinfile:
-     path: /etc/groups.local
-     marker: "# {mark} Added by CeR"
-     block: |
-       {{ project_code }}_vmadmin.eresearch sudo token
-       {{ project_code }}_vmuser.eresearch
-       {{ project_code }}_rw
+  template:
+    src: groups.local.j2
+    dest: /etc/groups.local
+    owner: root
+    group: root
+    mode: 0644
+    force: yes
 
-- name: run the puppet manually to create the groups on the VM
+- name: run puppet to create groups and accounts for members of the groups defined in /etc/groups.local
   become: true
   command: /opt/puppetlabs/bin/puppet agent -t
-
-- name: restore /etc/groups.local 
-  become: true
-  blockinfile:
-     path: /etc/groups.local
-     marker: "# {mark} Added by CeR"
-     content: ""

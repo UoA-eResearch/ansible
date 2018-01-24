@@ -1,0 +1,27 @@
+# On machines with user self-service enabled, this file can be used to add to
+# the list of groups that Puppet uses to manage local users.
+#
+# Columns are space separated. Format is:
+#
+# <group name> [sudo] [token]
+#
+# If a group has the 'sudo' field present, an ALL=(ALL) ALL sudo rule will be
+# added. If it has the 'token' field present, the members if the group will be
+# required to use two-facter authentication.
+#
+# Unless you have a very good reason, if you include the 'sudo' flag you
+# should also include the 'token' flag.
+#
+# You can apply changes to the groups list immediately without waiting for the
+# next Puppet run with "sudo puppet agent -t".
+#
+# Examples:
+#
+# rvmf12345_vmadmin.eresearch sudo token
+# rvmf12345_vmuser.eresearch
+#
+
+{{ project_code }}_vmadmin.eresearch sudo token
+{{ project_code }}_vmuser.eresearch
+{{ project_code }}_rw.eresearch
+
