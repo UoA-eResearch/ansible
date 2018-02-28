@@ -10,6 +10,18 @@
     mode: "g+s"
   become: yes
 
+
+- name: permission | set ACLs to ensure that the group has always the right permissions on files and folders
+  acl:
+    path: "{{ lvm_mntp }}"
+    entity: "{{ project_code }}_rw.eresearch"
+    etype: group
+    recursive: yes
+    default: no
+    permissions: rwx
+    state: present
+  become: yes
+
 - name: permission | set ACLs to ensure that the group has always the right permissions on files and folders
   acl:
     path: "{{ lvm_mntp }}"
