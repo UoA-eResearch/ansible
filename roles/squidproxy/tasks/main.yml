@@ -23,3 +23,12 @@
     dest: /etc/apt/apt.conf.d/98proxy
   become: yes
   when: ansible_os_family == "Debian"
+
+- name: RHEL | add proxy setting for yum
+  lineinfile:
+    path: /etc/yum.conf
+    line: "{{ item }}"
+  with_items:
+    - 'proxy=http://squid.auckland.ac.nz:3128'
+  become: yes
+  when: ansible_os_family == "RedHat"
