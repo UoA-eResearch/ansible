@@ -21,7 +21,7 @@ This project contains [ansible](http://docs.ansible.com/ansible) playbook to dow
 
       ```
       cd ansible
-      ansible-playbook -i envs/ playbook.yml --user=$USER --ask-sudo-pass
+      ansible-playbook -i envs/ playbook.yml --user=$USER --ask-become-pass
       ```
       
 ### Note: all the servers in `envs/hosts` should allow ssh auth using keypair
