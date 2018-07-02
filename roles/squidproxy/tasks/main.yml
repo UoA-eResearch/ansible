@@ -17,6 +17,18 @@
     - 'export https_proxy="http://squid.auckland.ac.nz:3128/"'
     - 'export no_proxy="localhost,127.0.0.1,localaddress,.auckland.ac.nz"'
 
+- name: ensure sudoers.local config file is present
+  file:
+    path: /etc/sudoers.local
+    state: file
+  become: yes
+
+- name: keep proxy setting when sudo
+  become: yes
+  lineinfile:
+    path: /etc/sudoers.local
+    line: 'Defaults env_keep = "http_proxy https_proxy no_proxy"'
+
 - name: Ubuntu | add proxy setting for apt
   template:
     src: apt.conf.txt
