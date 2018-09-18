@@ -20,4 +20,4 @@ lvm_mntp: /data
 lvm_filesystem: xfs
 
 # project code, will append _rw automatically
-project_code: rvmf00157
+# project_code: rvmf00229 # Now defined in playbook.yml

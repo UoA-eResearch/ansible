@@ -1,4 +1,4 @@
 ---
 # defaults file for groups.local
-project_code: rvmf99999
+# project_code: rvmf00229 # Now defined in playbook.yml
 
