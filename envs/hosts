@@ -1,2 +1,8 @@
 [fqdn]
 certestvm.its.auckland.ac.nz
+
+[fqdn-py3]
+certestubuntu1804.its.auckland.ac.nz
+
+[fqdn-py3:vars]
+ansible_python_interpreter=/usr/bin/python3
