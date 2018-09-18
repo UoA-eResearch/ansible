@@ -2,7 +2,7 @@
 # defaults file for anaconda
 anaconda_mirror : 'https://repo.continuum.io/archive'
 anaconda_python_ver : '3'
-anaconda_ver : '5.0.1'
+anaconda_ver : '5.2.0'
 anaconda_platform : 'Linux-x86_64'
 anaconda_install_dir: '/data'
 anaconda_link_dir: '/opt/anaconda'
