@@ -13,4 +13,5 @@
 
 - name: run puppet to create groups and accounts for members of the groups defined in /etc/groups.local
   become: true
-  command: /opt/puppetlabs/bin/puppet agent -t
+  puppet:
+  #command: /opt/puppetlabs/bin/puppet agent -t
