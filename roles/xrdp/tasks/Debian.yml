@@ -1,0 +1,14 @@
+---
+- name: Adding xRDP repo
+  apt_repository:
+    repo: ppa:hermlnx/xrdp
+  become: yes
+
+- name: Install xRDP package
+  apt:
+    name: xrdp
+    state: present
+  become: yes
+
+- include: UbuntuMate.yml
+
