@@ -1,3 +1,51 @@
 ---
-- debug:
-    msg: 'Not implemented yet'
+- name: Check if EPEL repo is already configured.
+  stat: path={{ epel_repofile_path }}
+  register: epel_repofile_result
+  become: yes
+ 
+- name: Install EPEL repo
+  yum:
+    name: "{{ epel_repo_url }}"
+    state: present
+  register: result
+  when: not epel_repofile_result.stat.exists
+  become: yes
+ 
+- name: Import EPEL GPG key
+  rpm_key:
+    key: "{{ epel_repo_gpg_key_url }}"
+    state: present
+  when: not epel_repofile_result.stat.exists
+  become: yes
+
+- name: Install xRDP package
+  yum:
+    name: xrdp
+    enablerepo: epel
+    state: latest
+  become: yes
+
+- name: Install TigerVNC Server
+  yum:
+    name: tigervnc-server
+    state: latest
+  become: yes
+
+- name: Install Mate
+  shell: "yum -y groupinstall 'MATE Desktop'"
+  become: yes
+
+- name: Install Server with GUI
+  shell: "yum -y groupinstall 'Server with GUI' --skip-broken"
+  become: yes
+
+- name: Get default runlevel
+  command: systemctl get-default
+  register: runlevel
+  become: yes
+
+- name: Set graphical runlevel
+  command: systemctl set-default graphical.target
+  when: runlevel.stdout != "graphical.target"
+  become: yes

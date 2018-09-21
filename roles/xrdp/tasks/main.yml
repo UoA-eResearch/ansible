@@ -6,8 +6,8 @@
   template:
     src: startwm.sh.j2
     dest: /etc/xrdp/startwm.sh
-    owner: xrdp
-    group: xrdp
+    owner: root
+    group: root
     mode: 0755
     force: yes
   become: yes
@@ -26,6 +26,12 @@
   service: 
     name: xrdp
     state: restarted
+  become: yes
+
+- name: Enable xRDP service
+  service:
+    name: xrdp
+    enabled: yes
   become: yes
 
 - name: Open RDP port (3389) on VM's firewall
