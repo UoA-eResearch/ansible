@@ -36,6 +36,7 @@
   with_items:
     - 'export http_proxy="http://squid.auckland.ac.nz:3128/"'
     - 'export https_proxy="http://squid.auckland.ac.nz:3128/"'
+    - 'export no_proxy="localhost,127.0.0.1,auckland.ac.nz"'
   become: yes
   notify:
     - reload unit
