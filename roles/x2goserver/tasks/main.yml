@@ -16,3 +16,11 @@
     - configuration
     - x2go
     - x2go-matebindings
+  when: ansible_os_family == "Debian"
+
+- include: matebindings-redhat.yml
+  tags:
+    - configuration
+    - x2go
+    - x2go-matebindings
+  when: ansible_os_family == "RedHat"

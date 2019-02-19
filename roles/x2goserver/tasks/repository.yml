@@ -1,5 +1,5 @@
 ---
-- name: repository | add x2go/stable
+- name: repository | add x2go/stable (Ubuntu only, RHEL packages obtained from EPEL) 
   apt_repository:
     repo: "ppa:x2go/stable"
     state: present
@@ -7,4 +7,5 @@
   tags:
     - x2go-repository-add
   become: yes
+  when: ansible_os_family == "Debian"
 

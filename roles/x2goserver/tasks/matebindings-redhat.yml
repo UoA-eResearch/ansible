@@ -1,0 +1,4 @@
+---
+- name: install desktop environment Mate
+  yum: name="@^MATE Desktop" state=present
+  become: yes
