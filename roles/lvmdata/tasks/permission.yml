@@ -5,7 +5,7 @@
     path: "{{ lvm_mntp }}"
     state: directory
     owner: root
-    group: "{{ project_code }}_rw.eresearch"
+    group: "{{ project_code }}_vmuser.eresearch"
     recurse: yes
     mode: "g+s"
   become: yes
@@ -14,7 +14,7 @@
 - name: permission | set ACLs to ensure that the group has always the right permissions on files and folders
   acl:
     path: "{{ lvm_mntp }}"
-    entity: "{{ project_code }}_rw.eresearch"
+    entity: "{{ project_code }}_vmuser.eresearch"
     etype: group
     recursive: yes
     default: no
@@ -25,7 +25,7 @@
 - name: permission | set ACLs to ensure that the group has always the right permissions on files and folders
   acl:
     path: "{{ lvm_mntp }}"
-    entity: "{{ project_code }}_rw.eresearch"
+    entity: "{{ project_code }}_vmuser.eresearch"
     etype: group
     recursive: yes
     default: yes
