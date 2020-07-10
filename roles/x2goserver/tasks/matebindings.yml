@@ -1,17 +1,7 @@
 ---
-- name: matebindings | add ubuntu-mate-dev
+- name: matebindings | add ubuntu-mate repository
   apt_repository:
-    repo: "ppa:ubuntu-mate-dev/ppa"
-    state: present
-    update_cache: true
-  tags:
-    - x2go-matebindings-repository-add
-  become: yes
-
-
-- name: matebindings | add ubuntu-mate-dev/{{ ansible_distribution_release }}-mate
-  apt_repository:
-    repo: "ppa:ubuntu-mate-dev/{{  ansible_distribution_release }}-mate"
+    repo: "ppa:x2go/stable"
     state: present
     update_cache: true
   tags:
