@@ -1,0 +1,30 @@
+- name: create /etc/pam_radius.conf
+  template:
+    src: pam_radius.conf.j2
+    dest: "/etc/pam_radius.conf"
+    mode: '0600'
+  become: yes
+
+- name: mkdir for skel. Probably already there
+  file:
+    path: "/etc/skel"
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: install ldap.conf
+  copy:
+    src: "files/mkhomedir"
+    dest: "/etc/pam.d/mkhomedir"
+    mode: '0644'
+  become: yes
+  become_user: root
+
+- name: Auto create user directory
+  become: yes
+  lineinfile:
+    dest: /etc/pam.d/common-session
+    state: present
+    insertafter: 'EOF'
+    line: "session	required	pam_mkhomedir.so"
+

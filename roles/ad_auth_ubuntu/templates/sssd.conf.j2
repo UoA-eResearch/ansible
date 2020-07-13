@@ -1,0 +1,96 @@
+# This file is managed by Ansible, changes may be overwritten.
+# needs variables: login_group, ldap_password and default_gid
+#
+[sssd]
+config_file_version = 2
+#Services commented out, as it now breaks the config with later versions of SSSD
+#services = nss, pam, autofs
+domains = UOA.AUCKLAND.AC.NZ
+
+#[logging]
+# default = FILE:/var/log/krb5libs.log
+# kdc = FILE:/var/log/krb5kdc.log
+# admin_server = FILE:/var/log/kadmind.log
+
+[domain/default]
+auth_provider = krb5
+chpass_provider = krb5
+krb5_realm = UOA.AUCKLAND.AC.NZ
+krb5_server = uoaadsp02.uoa.auckland.ac.nz:88,uoaadsp01.uoa.auckland.ac.nz:88,uoaadsp03.uoa.auckland.ac.nz:88,uoaadsp05.uoa.auckland.ac.nz:88,uoaadsp06.uoa.auckland.ac.nz:88,uoaadsp07.uoa.auckland.ac.nz:88,uoaadsp04.uoa.auckland.ac.nz:88
+cache_credentials = True
+
+krb5_store_password_if_offline = True
+krb5_kpasswd = uoaadsp02.uoa.auckland.ac.nz:464
+
+[nss]
+debug_level = 3
+filter_users = root,avahi,haldaemon,dbus,nslcd,ntp,rpc,rpcuser,smmsp,nscd,ubuntu
+filter_groups = root,daemon,adm,sudo
+
+[pam]
+
+[domain/UOA.AUCKLAND.AC.NZ]
+debug_level = 3
+id_provider = ldap
+auth_provider = krb5
+chpass_provider = none
+
+enumerate = false
+cache_credentials = false
+ldap_network_timeout=12
+
+ldap_schema = AD
+ldap_id_mapping = false
+ldap_uri = ldap://uoa.auckland.ac.nz:389/,ldap://uoaadsp01.uoa.auckland.ac.nz:389,ldap://uoaadsp02.uoa.auckland.ac.nz:389,ldap://uoaadsp03.uoa.auckland.ac.nz:389,ldap://uoaadsp04.uoa.auckland.ac.nz:389,ldap://uoaadsp05.uoa.auckland.ac.nz:389,ldap://uoaadsp06.uoa.auckland.ac.nz:389,ldap://uoaadsp07.uoa.auckland.ac.nz:389
+
+ldap_search_base = DC=UoA,DC=auckland,DC=ac,DC=nz
+ldap_user_search_base = OU=People,DC=UoA,DC=auckland,DC=ac,DC=nz
+
+ldap_group_search_base = OU=Groups,DC=UoA,DC=auckland,DC=ac,DC=nz?subtree?(|(CN=*.eresearch)(CN=*.ceres)(CN=*.access)(CN=*.uoa))
+ignore_group_members = true
+
+ldap_force_upper_case_realm = true
+ldap_user_member_of = memberOf
+ldap_tls_reqcert = allow
+ldap_tls_cacertdir = /etc/ssl/certs
+ldap_tls_cacert = /etc/ssl/certs/ldapcacert.crt
+#
+ldap_default_bind_dn = svc-uoaldap@uoa.auckland.ac.nz
+ldap_default_authtok = {{ldap_password}}
+ldap_default_authtok_type = password
+#
+ldap_user_home_directory = unixhomedirectory
+ldap_user_gecos = displayName
+ldap_user_shell = loginshell
+ldap_user_gid_number = gidnumber
+ldap_user_uid_number = uidnumber
+ldap_user_name = cn
+#ldap_user_object_class = person
+#ldap_user_object_class = user
+ldap_page_size = 1000
+#
+ldap_group_gid_number = gidnumber
+ldap_group_name = cn
+ldap_group_member = member
+ldap_group_modify_timestamp = whenchanged
+ldap_group_uuid = objectguid
+ldap_group_objectsid = objectsid
+ldap_group_object_class = group
+#
+#Authorization
+ldap_access_order = filter
+ldap_access_filter = (|(memberOf=cn=staff.ceres,ou=ceres,ou=Groups,dc=UoA,dc=auckland,dc=ac,dc=nz)(memberOf=cn=vm.ceres,ou=ceres,ou=Groups,dc=UoA,dc=auckland,dc=ac,dc=nz))
+#ad_access_filter = (|(memberOf=cn={{login_group}},ou=Groups,dc=UoA,dc=auckland,dc=ac,dc=nz)(memberOf=cn=vm.ceres,ou=Groups,dc=UoA,dc=auckland,dc=ac,dc=nz))
+# Shell
+default_shell = /bin/bash
+#override_shell = /bin/bash
+#Home
+override_homedir = /home/%u
+#use_fully_qualified_names = True
+#Default LDAP group ID in the password file
+override_gid = {{default_gid}}
+
+krb5_realm = UOA.AUCKLAND.AC.NZ
+krb5_server = uoaadsp02.uoa.auckland.ac.nz:88,uoaadsp01.uoa.auckland.ac.nz:88,uoaadsp03.uoa.auckland.ac.nz:88,uoaadsp05.uoa.auckland.ac.nz:88,uoaadsp06.uoa.auckland.ac.nz:88,uoaadsp07.uoa.auckland.ac.nz:88,uoaadsp04.uoa.auckland.ac.nz:88
+
+[autofs]

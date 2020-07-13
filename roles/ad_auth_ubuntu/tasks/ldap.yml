@@ -1,0 +1,37 @@
+- name: ensure LDAP is installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+  become: yes
+  with_items:
+    - libssl
+    - libnss-ldap
+    - libpam-ldap
+    - nscd
+    - ldap-utils
+
+- name: install ldap.conf
+  copy:
+    src: "files/ldap.conf"
+    dest: "/etc/ldap/ldap.conf"
+    mode: '0644'
+  become: yes
+  become_user: root
+
+- name: link ldap.conf with /etc version.
+  file:
+    src: "/etc/ldap/ldap.conf"
+    dest: "/etc/ldap"
+    state: link
+    
+- name: install ldap.conf
+  copy:
+    src: "files/ldapcacert.crt"
+    dest: "/etc/ssl/certs/{{item}}"
+    mode: '0644'
+  become: yes
+  become_user: root
+  with_items:
+    - ldapcacert.crt
+    - cacert.crt

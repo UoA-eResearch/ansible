@@ -1,0 +1,19 @@
+- name: ensure LDAP is installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+  become: yes
+  with_items:
+    - krb5-kdc
+    - krb5-admin-server
+    - krb5-user
+
+- name: install krb5.conf
+  copy:
+    src: "files/krb5.conf"
+    dest: "/etc/krb5.conf"
+    mode: '0644'
+  become: yes
+  become_user: root
+

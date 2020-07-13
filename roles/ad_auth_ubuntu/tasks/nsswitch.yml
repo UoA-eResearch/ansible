@@ -1,0 +1,8 @@
+- name: install nsswitch.conf
+  copy:
+    src: "files/nsswitch.conf"
+    dest: "/etc/nsswitch.conf"
+    mode: '0644'
+  become: yes
+  become_user: root
+

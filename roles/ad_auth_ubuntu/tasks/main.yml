@@ -1,0 +1,6 @@
+- include_tasks: time.yml
+- include_tasks: sssd.yml
+- include_tasks: kerberos.yml
+- include_tasks: ldap.yml
+- include_tasks: pam.yml
+- include_tasks: nsswitch.yml

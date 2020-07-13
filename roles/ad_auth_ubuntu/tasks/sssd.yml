@@ -1,0 +1,29 @@
+- name: ensure sssd is installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+  become: yes
+  with_items:
+    - sssd
+    - sssd-tools
+    - sssd-ldap
+    - libpam-sss
+    - libnss-sss
+
+- name: mkdir for sssd. Probably already there
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: '0600'
+  with_items:
+    - /etc/sssd
+    - /etc/sssd/conf.d
+  become: yes
+
+- name: create /etc/sssd/sssd.conf
+  template:
+    src: sssd.conf.j2
+    dest: "/etc/sssd/sssd.conf"
+    mode: '0600'
+  become: yes
