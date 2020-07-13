@@ -1,0 +1,27 @@
+- name: build tools
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+  become: yes
+  with_items:
+    - build-essential
+    - bison
+    - flex
+    - autotools-dev
+    - autoconf
+    - cmake
+    - git
+
+- name: Useful Libraries
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+  become: yes
+  with_items:
+    - -y libreadline-dev
+    - -y zlib1g-dev
+    - -y libgdbm-dev
+    - -y libyaml-dev
+    - -y liblzma-dev
