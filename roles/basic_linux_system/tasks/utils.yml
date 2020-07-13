@@ -1,0 +1,10 @@
+- name: network utils are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+  become: yes
+  with_items:
+    - inetutils-traceroute
+    - net-tools
+

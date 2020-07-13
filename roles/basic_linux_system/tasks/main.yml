@@ -1,0 +1,3 @@
+- include_tasks: dns.yml
+- include_tasks: time.yml
+- include_tasks: utils.yml
