@@ -8,6 +8,7 @@
      - 'lvm2'
      - 'scsitools'
      - 'xfsprogs'
+     - 'acl'
 
 - name: ubuntu | checking for scsi devices
   shell: "sg_scan"
